@@ -1,33 +1,33 @@
-// ConnectionPage.jsx
-import React, { useEffect, useState } from "react";
-import mockStudents from "../data/mockStudents.json";
+import React from "react";
+import { useConnections } from "../context/ConnectionContext";
 
 const ConnectionPage = () => {
-  const [connections, setConnections] = useState([]);
+  const { connectedStudents } = useConnections();
 
-  useEffect(() => {
-    const requests = JSON.parse(localStorage.getItem("connectionRequests")) || [];
-    const matched = mockStudents.filter((s) => requests.includes(s.id));
-    setConnections(matched);
-  }, []);
+  if (connectedStudents.length === 0) {
+    return <p className="text-center mt-8">No connections yet.</p>;
+  }
 
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-4">My Connections</h2>
-      {connections.length === 0 ? (
-        <p className="text-gray-600">No connections yet.</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {connections.map((student) => (
-            <div key={student.id} className="bg-white rounded-lg p-4 shadow-md">
-              <h3 className="text-lg font-bold mb-1">{student.name}</h3>
-              <p className="text-sm text-gray-600">{student.year} - {student.department}</p>
-              <p className="mt-2 text-sm"><strong>Skills:</strong> {student.skills.join(", ")}</p>
-              <p className="text-sm"><strong>Project Areas:</strong> {student.projectAreas.join(", ")}</p>
+    <div className="p-4">
+      <h2 className="text-3xl font-bold mb-6 text-center">Your Connections</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {connectedStudents.map((student) => (
+          <div key={student.id} className="bg-white rounded-xl p-4 shadow-md hover:shadow-xl transition">
+            <img
+              src={`https://api.dicebear.com/7.x/initials/svg?seed=${student.name}`}
+              alt="Profile"
+              className="w-20 h-20 rounded-full mx-auto mb-3"
+            />
+            <h3 className="text-center text-lg font-semibold">{student.name}</h3>
+            <p className="text-center text-sm text-gray-500">{student.year} - {student.department}</p>
+            <div className="mt-2 text-sm text-gray-700">
+              <p><strong>Skills:</strong> {student.skills.join(", ")}</p>
+              <p><strong>Interests:</strong> {student.interests.join(", ")}</p>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
