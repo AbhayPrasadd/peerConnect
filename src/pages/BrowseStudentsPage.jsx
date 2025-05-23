@@ -1,9 +1,9 @@
 import React from 'react'
 
-function PeerDiscoveryPage() {
+function BrowseStudentsPage() {
   return (
     <div>PeerDiscoveryPage</div>
   )
 }
 
-export default PeerDiscoveryPage
+export default BrowseStudentsPage
