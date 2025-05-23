@@ -1,29 +1,53 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Facebook, Twitter, Instagram } from 'lucide-react';
 
-const Navbar = () => {
-  return (
-    <nav className="fixed top-0 left-0 w-full bg-green-700 text-white py-4 shadow-lg z-50">
-      <div className="container mx-auto flex justify-between items-center px-6">
-        <motion.h1
-          className="text-2xl font-bold"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          PeerConnect 🚀
-        </motion.h1>
-        <div className="space-x-6">
-          <a href="/" className="hover:text-yellow-400">Home</a>
-          <a href="/" className="hover:text-yellow-400">About</a>
-          <a href="/" className="hover:text-yellow-400">Contact</a>
-        </div>
+// Lazy load Spline only on client
+const Spline = lazy(() => import('@splinetool/react-spline'));
+
+// Error Boundary
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <h2 className="text-red-600 text-center mt-10">Something went wrong while loading a component.</h2>;
+    }
+    return this.props.children;
+  }
+}
+
+const Navbar = () => (
+  <nav className="fixed top-0 left-0 w-full bg-green-700 text-white py-4 shadow-lg z-50">
+    <div className="container mx-auto flex justify-between items-center px-6">
+      <motion.h1
+        className="text-2xl font-bold"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        PeerConnect 🚀
+      </motion.h1>
+      <div className="space-x-6">
+        <a href="/" className="hover:text-yellow-400">Home</a>
+        <a href="/" className="hover:text-yellow-400">About</a>
+        <a href="/" className="hover:text-yellow-400">Contact</a>
       </div>
-    </nav>
-  );
-};
+    </div>
+  </nav>
+);
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -49,14 +73,11 @@ const HeroSection = () => {
             Get Started
           </motion.button>
         </motion.div>
-        <div className="flex-1 h-[400px] w-full">
 
-
-          
-          {/* Placeholder for Spline 3D */}
-          <div className="w-full h-full bg-gray-100 border rounded-lg flex items-center justify-center">
-            <span className="text-gray-500">[ Add Spline 3D Robot Here ]</span>
-          </div>
+        <div className="flex-1 w-full h-[400px] md:h-[500px] relative">
+          <Suspense fallback={<div className="text-center text-gray-500">Loading 3D...</div>}>
+            <Spline scene="https://prod.spline.design/0pfqtWX8C0UhyKtX/scene.splinecode" />
+          </Suspense>
         </div>
       </div>
     </section>
@@ -115,7 +136,8 @@ const AboutSection = () => (
     <div className="container mx-auto text-center max-w-4xl">
       <h2 className="text-3xl font-bold text-green-800 mb-4">About PeerConnect</h2>
       <p className="text-gray-700 text-lg">
-        PeerConnect is built to bridge the gap between students who want to build, learn, and grow together. Our platform is designed to help students across all disciplines come together to make something great. Whether you're a coder, designer, or marketer — PeerConnect is for you.
+        PeerConnect is built to bridge the gap between students who want to build, learn, and grow together.
+        Our platform is for coders, designers, marketers — anyone with a drive to build!
       </p>
     </div>
   </section>
@@ -134,8 +156,8 @@ const Footer = () => (
   </footer>
 );
 
-const LandingPage = () => {
-  return (
+const LandingPage = () => (
+  <ErrorBoundary>
     <div className="min-h-screen bg-white">
       <Navbar />
       <HeroSection />
@@ -144,7 +166,7 @@ const LandingPage = () => {
       <AboutSection />
       <Footer />
     </div>
-  );
-};
+  </ErrorBoundary>
+);
 
 export default LandingPage;

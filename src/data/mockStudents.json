@@ -1,0 +1,21 @@
+[
+  {
+    "id": "1",
+    "name": "Alice Johnson",
+    "year": "3rd Year",
+    "department": "Computer Science",
+    "skills": ["React", "Node.js", "UI/UX"],
+    "interests": ["Web Development", "Hackathons"],
+    "projectAreas": ["Frontend", "APIs"]
+  },
+  {
+    "id": "2",
+    "name": "Rahul Mehra",
+    "year": "2nd Year",
+    "department": "Electronics",
+    "skills": ["IoT", "Arduino"],
+    "interests": ["Robotics", "Sensors"],
+    "projectAreas": ["Embedded Systems"]
+  }
+]
+
