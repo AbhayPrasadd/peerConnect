@@ -7,19 +7,20 @@ const BrowseStudentsPage = () => {
   const [search, setSearch] = useState("");
   const [filterDept, setFilterDept] = useState("");
   const [filterSkill, setFilterSkill] = useState("");
+  const [connectedIds, setConnectedIds] = useState([]);
 
   useEffect(() => {
     setStudents(mockStudents);
+    const requests = JSON.parse(localStorage.getItem("connectionRequests")) || [];
+    setConnectedIds(requests);
   }, []);
 
   const sendConnectionRequest = (id) => {
     const requests = JSON.parse(localStorage.getItem("connectionRequests")) || [];
     if (!requests.includes(id)) {
-      requests.push(id);
-      localStorage.setItem("connectionRequests", JSON.stringify(requests));
-      alert("Connection request sent.");
-    } else {
-      alert("Request already sent.");
+      const updatedRequests = [...requests, id];
+      localStorage.setItem("connectionRequests", JSON.stringify(updatedRequests));
+      setConnectedIds(updatedRequests);
     }
   };
 
@@ -28,9 +29,7 @@ const BrowseStudentsPage = () => {
       student.name.toLowerCase().includes(search.toLowerCase()) ||
       student.interests.join(" ").toLowerCase().includes(search.toLowerCase());
     const matchDept = filterDept ? student.department === filterDept : true;
-    const matchSkill = filterSkill
-      ? student.skills.includes(filterSkill)
-      : true;
+    const matchSkill = filterSkill ? student.skills.includes(filterSkill) : true;
     return matchSearch && matchDept && matchSkill;
   });
 
@@ -38,10 +37,10 @@ const BrowseStudentsPage = () => {
   const allSkills = [...new Set(mockStudents.flatMap((s) => s.skills))];
 
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-4">Browse Students</h2>
+    <div className="p-4">
+      <h2 className="text-3xl font-bold mb-6 text-center">Browse Students</h2>
 
-      <div className="flex flex-col md:flex-row gap-4 mb-6">
+      <div className="flex flex-col md:flex-row gap-4 justify-center mb-8">
         <input
           type="text"
           placeholder="Search by name or interest"
@@ -71,18 +70,30 @@ const BrowseStudentsPage = () => {
         </select>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {filteredStudents.map((student) => (
-          <div key={student.id} className="bg-white rounded-lg p-4 shadow-md">
-            <h3 className="text-lg font-bold mb-1">{student.name}</h3>
-            <p className="text-sm text-gray-600">{student.year} - {student.department}</p>
-            <p className="mt-2 text-sm"><strong>Skills:</strong> {student.skills.join(", ")}</p>
-            <p className="text-sm"><strong>Interests:</strong> {student.interests.join(", ")}</p>
+          <div key={student.id} className="bg-white rounded-xl p-4 shadow-md hover:shadow-xl transition">
+            <img
+              src={`https://api.dicebear.com/7.x/initials/svg?seed=${student.name}`}
+              alt="Profile"
+              className="w-20 h-20 rounded-full mx-auto mb-3"
+            />
+            <h3 className="text-center text-lg font-semibold">{student.name}</h3>
+            <p className="text-center text-sm text-gray-500">{student.year} - {student.department}</p>
+            <div className="mt-2 text-sm text-gray-700">
+              <p><strong>Skills:</strong> {student.skills.join(", ")}</p>
+              <p><strong>Interests:</strong> {student.interests.join(", ")}</p>
+            </div>
             <button
               onClick={() => sendConnectionRequest(student.id)}
-              className="mt-4 bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-md"
+              className={`mt-4 w-full px-4 py-2 rounded-md text-white font-medium ${
+                connectedIds.includes(student.id)
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-green-600 hover:bg-green-700"
+              }`}
+              disabled={connectedIds.includes(student.id)}
             >
-              Connect
+              {connectedIds.includes(student.id) ? "Connected" : "Connect"}
             </button>
           </div>
         ))}

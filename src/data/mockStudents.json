@@ -3,19 +3,464 @@
     "id": "1",
     "name": "Alice Johnson",
     "year": "3rd Year",
-    "department": "Computer Science",
-    "skills": ["React", "Node.js", "UI/UX"],
-    "interests": ["Web Development", "Hackathons"],
-    "projectAreas": ["Frontend", "APIs"]
+    "department": "IT",
+    "skills": [
+      "Python",
+      "UI/UX",
+      "Figma",
+      "Arduino"
+    ],
+    "interests": [
+      "Web Development",
+      "Cloud",
+      "Design"
+    ],
+    "projectAreas": [
+      "ML Models",
+      "Frontend"
+    ]
   },
   {
     "id": "2",
     "name": "Rahul Mehra",
+    "year": "Final Year",
+    "department": "IT",
+    "skills": [
+      "SQL",
+      "ML",
+      "IoT"
+    ],
+    "interests": [
+      "Hackathons",
+      "Web Development",
+      "AI"
+    ],
+    "projectAreas": [
+      "Database Design",
+      "ML Models"
+    ]
+  },
+  {
+    "id": "3",
+    "name": "Priya Singh",
     "year": "2nd Year",
     "department": "Electronics",
-    "skills": ["IoT", "Arduino"],
-    "interests": ["Robotics", "Sensors"],
-    "projectAreas": ["Embedded Systems"]
+    "skills": [
+      "Arduino",
+      "SQL",
+      "IoT",
+      "Node.js"
+    ],
+    "interests": [
+      "Web Development",
+      "AI"
+    ],
+    "projectAreas": [
+      "Frontend",
+      "Embedded Systems"
+    ]
+  },
+  {
+    "id": "4",
+    "name": "Vikram Patel",
+    "year": "1st Year",
+    "department": "Computer Science",
+    "skills": [
+      "Python",
+      "DSA",
+      "Arduino"
+    ],
+    "interests": [
+      "AI",
+      "Web Development"
+    ],
+    "projectAreas": [
+      "APIs",
+      "ML Models"
+    ]
+  },
+  {
+    "id": "5",
+    "name": "Ananya Rao",
+    "year": "1st Year",
+    "department": "Computer Science",
+    "skills": [
+      "React",
+      "Python"
+    ],
+    "interests": [
+      "Robotics",
+      "Design"
+    ],
+    "projectAreas": [
+      "ML Models",
+      "APIs"
+    ]
+  },
+  {
+    "id": "6",
+    "name": "Sahil Verma",
+    "year": "Final Year",
+    "department": "IT",
+    "skills": [
+      "C++",
+      "Figma"
+    ],
+    "interests": [
+      "AI",
+      "Hackathons",
+      "Cloud"
+    ],
+    "projectAreas": [
+      "ML Models",
+      "Database Design"
+    ]
+  },
+  {
+    "id": "7",
+    "name": "Neha Kapoor",
+    "year": "Final Year",
+    "department": "IT",
+    "skills": [
+      "Node.js",
+      "Arduino",
+      "Java",
+      "DSA"
+    ],
+    "interests": [
+      "Robotics",
+      "Cloud"
+    ],
+    "projectAreas": [
+      "ML Models"
+    ]
+  },
+  {
+    "id": "8",
+    "name": "Rohit Sharma",
+    "year": "3rd Year",
+    "department": "IT",
+    "skills": [
+      "SQL",
+      "Node.js"
+    ],
+    "interests": [
+      "Hackathons",
+      "Robotics",
+      "Cloud"
+    ],
+    "projectAreas": [
+      "ML Models",
+      "Frontend"
+    ]
+  },
+  {
+    "id": "9",
+    "name": "Divya Nair",
+    "year": "1st Year",
+    "department": "Civil",
+    "skills": [
+      "Java",
+      "DSA"
+    ],
+    "interests": [
+      "Sensors",
+      "Data Science"
+    ],
+    "projectAreas": [
+      "APIs"
+    ]
+  },
+  {
+    "id": "10",
+    "name": "Karan Malhotra",
+    "year": "2nd Year",
+    "department": "Electronics",
+    "skills": [
+      "React",
+      "DSA",
+      "Arduino",
+      "SQL"
+    ],
+    "interests": [
+      "Hackathons",
+      "Data Science",
+      "Design"
+    ],
+    "projectAreas": [
+      "Frontend"
+    ]
+  },
+  {
+    "id": "11",
+    "name": "Sneha Iyer",
+    "year": "Final Year",
+    "department": "Mechanical",
+    "skills": [
+      "Figma",
+      "React"
+    ],
+    "interests": [
+      "Hackathons",
+      "Design",
+      "Sensors"
+    ],
+    "projectAreas": [
+      "Frontend"
+    ]
+  },
+  {
+    "id": "12",
+    "name": "Amit Trivedi",
+    "year": "1st Year",
+    "department": "IT",
+    "skills": [
+      "UI/UX",
+      "Arduino",
+      "SQL",
+      "C++"
+    ],
+    "interests": [
+      "AI",
+      "Robotics",
+      "Design"
+    ],
+    "projectAreas": [
+      "Database Design"
+    ]
+  },
+  {
+    "id": "13",
+    "name": "Isha Gupta",
+    "year": "Final Year",
+    "department": "Computer Science",
+    "skills": [
+      "Node.js",
+      "Figma",
+      "DSA",
+      "Java"
+    ],
+    "interests": [
+      "Data Science",
+      "AI",
+      "Sensors"
+    ],
+    "projectAreas": [
+      "Backend",
+      "APIs"
+    ]
+  },
+  {
+    "id": "14",
+    "name": "Ravi Deshmukh",
+    "year": "2nd Year",
+    "department": "IT",
+    "skills": [
+      "UI/UX",
+      "Arduino",
+      "Java",
+      "SQL"
+    ],
+    "interests": [
+      "Robotics",
+      "Hackathons",
+      "Data Science"
+    ],
+    "projectAreas": [
+      "Backend",
+      "ML Models"
+    ]
+  },
+  {
+    "id": "15",
+    "name": "Tanya Bansal",
+    "year": "Final Year",
+    "department": "Mechanical",
+    "skills": [
+      "IoT",
+      "C++",
+      "React"
+    ],
+    "interests": [
+      "Robotics",
+      "Cloud",
+      "Sensors"
+    ],
+    "projectAreas": [
+      "Database Design",
+      "Frontend"
+    ]
+  },
+  {
+    "id": "16",
+    "name": "Arjun Reddy",
+    "year": "3rd Year",
+    "department": "IT",
+    "skills": [
+      "Python",
+      "SQL",
+      "UI/UX"
+    ],
+    "interests": [
+      "Cloud",
+      "Sensors"
+    ],
+    "projectAreas": [
+      "Embedded Systems",
+      "ML Models"
+    ]
+  },
+  {
+    "id": "17",
+    "name": "Meera Sinha",
+    "year": "3rd Year",
+    "department": "Computer Science",
+    "skills": [
+      "DSA",
+      "IoT",
+      "ML",
+      "Java"
+    ],
+    "interests": [
+      "Hackathons",
+      "Design",
+      "AI"
+    ],
+    "projectAreas": [
+      "ML Models"
+    ]
+  },
+  {
+    "id": "18",
+    "name": "Deepak Yadav",
+    "year": "Final Year",
+    "department": "IT",
+    "skills": [
+      "Arduino",
+      "React",
+      "Python"
+    ],
+    "interests": [
+      "Hackathons",
+      "Robotics",
+      "Web Development"
+    ],
+    "projectAreas": [
+      "Backend"
+    ]
+  },
+  {
+    "id": "19",
+    "name": "Nikita Jain",
+    "year": "Final Year",
+    "department": "Civil",
+    "skills": [
+      "SQL",
+      "Figma",
+      "DSA",
+      "Arduino"
+    ],
+    "interests": [
+      "Data Science",
+      "AI"
+    ],
+    "projectAreas": [
+      "Frontend",
+      "Database Design"
+    ]
+  },
+  {
+    "id": "20",
+    "name": "Yash Agarwal",
+    "year": "2nd Year",
+    "department": "IT",
+    "skills": [
+      "Python",
+      "SQL",
+      "React"
+    ],
+    "interests": [
+      "Data Science",
+      "Web Development",
+      "Robotics"
+    ],
+    "projectAreas": [
+      "Database Design"
+    ]
+  },
+  {
+    "id": "21",
+    "name": "Pooja Desai",
+    "year": "2nd Year",
+    "department": "Mechanical",
+    "skills": [
+      "DSA",
+      "Python"
+    ],
+    "interests": [
+      "Cloud",
+      "Robotics"
+    ],
+    "projectAreas": [
+      "Backend"
+    ]
+  },
+  {
+    "id": "22",
+    "name": "Manav Kapoor",
+    "year": "2nd Year",
+    "department": "Mechanical",
+    "skills": [
+      "Java",
+      "DSA",
+      "Figma"
+    ],
+    "interests": [
+      "AI",
+      "Sensors",
+      "Hackathons"
+    ],
+    "projectAreas": [
+      "APIs",
+      "Embedded Systems"
+    ]
+  },
+  {
+    "id": "23",
+    "name": "Simran Kaur",
+    "year": "Final Year",
+    "department": "IT",
+    "skills": [
+      "DSA",
+      "Java",
+      "ML"
+    ],
+    "interests": [
+      "Sensors",
+      "Web Development",
+      "Robotics"
+    ],
+    "projectAreas": [
+      "Embedded Systems"
+    ]
+  },
+  {
+    "id": "24",
+    "name": "Kabir Chauhan",
+    "year": "2nd Year",
+    "department": "Electronics",
+    "skills": [
+      "SQL",
+      "C++",
+      "Figma"
+    ],
+    "interests": [
+      "Cloud",
+      "AI",
+      "Sensors"
+    ],
+    "projectAreas": [
+      "Database Design"
+    ]
   }
 ]
-
