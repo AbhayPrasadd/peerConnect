@@ -29,50 +29,32 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="px-4 sm:px-6 md:px-10 py-6 bg-gray-50 min-h-screen font-sans">
+    <div className=" sm:px-6 md:px-10 py-8   font-sans">
       {/* Header */}
-      <header className="mb-8">
-        <h1 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-2">Dashboard</h1>
-        <p className="text-gray-600 text-base sm:text-lg">
-          Welcome to your PeerConnect dashboard!
-        </p>
+      <header className="mb-10">
+        <h1 className="text-4xl font-bold text-blue-800 mb-2">Dashboard</h1>
+        <p className="text-gray-600 text-lg">Welcome to your PeerConnect dashboard</p>
       </header>
 
       {/* Stats Section */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
-        <StatCard
-          icon={<Users className="w-6 h-6 sm:w-8 sm:h-8" />}
-          label="Connections"
-          value={stats.connections}
-          color="blue"
-        />
-        <StatCard
-          icon={<Search className="w-6 h-6 sm:w-8 sm:h-8" />}
-          label="Skills Matched"
-          value={stats.skillsMatched}
-          color="indigo"
-        />
-        <StatCard
-          icon={<Tag className="w-6 h-6 sm:w-8 sm:h-8" />}
-          label="Project Tags"
-          value={stats.projectTags}
-          color="cyan"
-        />
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <StatCard icon={<Users />} label="Connections" value={stats.connections} color="blue" />
+        <StatCard icon={<Search />} label="Skills Matched" value={stats.skillsMatched} color="indigo" />
+        <StatCard icon={<Tag />} label="Project Tags" value={stats.projectTags} color="teal" />
       </section>
 
       {/* Tabs */}
-      <nav className="mb-6 border-b border-gray-200 overflow-x-auto">
-        <div className="flex space-x-6 text-base sm:text-lg font-medium">
+      <nav className="mb-6">
+        <div className="flex flex-wrap gap-4 text-base sm:text-lg font-medium">
           {Object.keys(tabContent).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`pb-3 px-1 sm:px-2 transition whitespace-nowrap ${
+              className={`px-4 py-2 rounded-full transition ${
                 activeTab === tab
-                  ? "text-blue-700 border-b-2 border-blue-600"
-                  : "text-gray-500 hover:text-blue-600"
+                  ? "bg-blue-600 text-white shadow"
+                  : "bg-white text-gray-700 border border-gray-300 hover:bg-blue-50"
               }`}
-              aria-current={activeTab === tab ? "page" : undefined}
             >
               {tabContent[tab].title}
             </button>
@@ -81,21 +63,17 @@ const Dashboard = () => {
       </nav>
 
       {/* Tab Content */}
-      <main className="bg-white p-5 sm:p-6 md:p-8 rounded-2xl shadow-md">
+      <main className="bg-white p-6 md:p-8 rounded-2xl shadow-md border">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4 }}
           >
-            <h2 className="text-xl sm:text-2xl font-semibold text-blue-800 mb-2">
-              {tabContent[activeTab].title}
-            </h2>
-            <p className="text-gray-700 text-sm sm:text-base">
-              {tabContent[activeTab].description}
-            </p>
+            <h2 className="text-2xl font-semibold text-blue-800 mb-2">{tabContent[activeTab].title}</h2>
+            <p className="text-gray-600">{tabContent[activeTab].description}</p>
           </motion.div>
         </AnimatePresence>
       </main>
@@ -103,19 +81,62 @@ const Dashboard = () => {
   );
 };
 
-const StatCard = ({ icon, label, value, color }) => (
-  <motion.div
-    className={`bg-white p-4 sm:p-5 rounded-2xl shadow hover:shadow-lg transition duration-300 flex items-center space-x-4 border-t-4 border-${color}-500`}
-    whileHover={{ scale: 1.03 }}
-  >
-    <div className={`p-3 bg-${color}-100 rounded-full text-${color}-600`}>
-      {icon}
-    </div>
-    <div>
-      <p className="text-sm sm:text-base text-gray-500">{label}</p>
-      <p className="text-xl sm:text-2xl font-semibold text-gray-800">{value}</p>
-    </div>
-  </motion.div>
-);
+const StatCard = ({ icon, label, value, color }) => {
+  const colorMap = {
+    blue: {
+      bg: "bg-blue-100",
+      text: "text-blue-600",
+      border: "border-blue-200",
+    },
+    indigo: {
+      bg: "bg-indigo-100",
+      text: "text-indigo-600",
+      border: "border-indigo-200",
+    },
+    teal: {
+      bg: "bg-teal-100",
+      text: "text-teal-600",
+      border: "border-teal-200",
+    },
+  };
+
+  const colors = colorMap[color];
+
+  // Example dummy sparkline graph (can be dynamic later)
+  const Sparkline = () => (
+    <svg width="80" height="30" viewBox="0 0 80 30" fill="none">
+      <polyline
+        fill="none"
+        stroke="#4f46e5"
+        strokeWidth="2"
+        points="0,20 15,10 30,15 45,5 60,10 75,4"
+      />
+    </svg>
+  );
+
+  return (
+    <motion.div
+      className={`flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-3 sm:space-y-0 sm:space-x-4 bg-white p-5 rounded-xl shadow-sm border-t-4 ${colors.border}`}
+      whileHover={{ scale: 1.02 }}
+    >
+      {/* Icon and Label */}
+      <div className="flex items-center space-x-4">
+        <div className={`p-3 rounded-xl ${colors.bg} ${colors.text} shadow-sm`}>
+          {React.cloneElement(icon, { className: "w-6 h-6" })}
+        </div>
+        <div>
+          <p className="text-gray-500 text-sm">{label}</p>
+          <p className="text-2xl font-bold text-gray-800">{value}</p>
+        </div>
+      </div>
+
+      {/* Mini Graph */}
+      <div className="w-full sm:w-auto pt-2 sm:pt-0">
+        <Sparkline />
+      </div>
+    </motion.div>
+  );
+};
+
 
 export default Dashboard;
