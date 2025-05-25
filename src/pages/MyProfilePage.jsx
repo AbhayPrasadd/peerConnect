@@ -1,155 +1,180 @@
 import React, { useState, useEffect } from "react";
 
-const MyProfilePage = () => {
+const MyProfile = () => {
   const [formData, setFormData] = useState({
     name: "",
-    collegeId: "",
-    year: "",
-    department: "",
+    age: "",
+    gender: "",
+    email: "",
+    phone: "",
+    address: "",
+    university: "",
+    course: "",
     skills: "",
-    projectAreas: "",
-    profilePic: null,
   });
 
-  const [profile, setProfile] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [image, setImage] = useState(null);
 
+  // Load from localStorage on first render
   useEffect(() => {
-    const stored = localStorage.getItem("userProfile");
-    if (stored) setProfile(JSON.parse(stored));
+    const savedData = localStorage.getItem("studentProfile");
+    const savedImage = localStorage.getItem("profileImage");
+    if (savedData) {
+      setFormData(JSON.parse(savedData));
+      setSubmitted(true);
+    }
+    if (savedImage) {
+      setImage(savedImage);
+    }
   }, []);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "profilePic" && files[0]) {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
       const reader = new FileReader();
-      reader.onloadend = () =>
-        setFormData((prev) => ({ ...prev, profilePic: reader.result }));
-      reader.readAsDataURL(files[0]);
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+      reader.onloadend = () => {
+        setImage(reader.result);
+        localStorage.setItem("profileImage", reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setProfile(formData);
-    localStorage.setItem("userProfile", JSON.stringify(formData));
+    setSubmitted(true);
+    localStorage.setItem("studentProfile", JSON.stringify(formData));
+  };
+
+  const handleEdit = () => {
+    setSubmitted(false);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
-      {!profile ? (
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white w-full max-w-4xl rounded-xl shadow-md p-8 grid md:grid-cols-2 gap-6"
-        >
-          {/* Left: Image preview */}
-          <div className="flex flex-col items-center justify-center gap-4">
-            <div className="w-32 h-32 bg-gray-100 rounded-full overflow-hidden shadow">
-              {formData.profilePic ? (
-                <img
-                  src={formData.profilePic}
-                  alt="Profile Preview"
-                  className="w-full h-full object-cover"
-                />
+    <div className="max-w-10xl mx-auto mt-6 mb-10 p-6">
+      {!submitted ? (
+        <>
+          <h2 className="text-3xl font-bold text-center mb-6 text-blue-800">
+            Student Profile Form
+          </h2>
+
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-5 gap-6 items-start">
+            {/* Image Upload Section */}
+            <div className="md:col-span-2 flex flex-col items-center space-y-4">
+              {image ? (
+                <img src={image} alt="Profile" className="w-55 h-55 rounded-full object-cover border border-blue-300" />
               ) : (
-                <div className="flex items-center justify-center h-full text-gray-400">Preview</div>
+                <div className="w-32 h-32 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 text-sm">
+                  No Image
+                </div>
               )}
+              <input type="file" accept="image/*" onChange={handleImageChange} className="text-sm text-gray-600" />
             </div>
-            <input
-              type="file"
-              name="profilePic"
-              accept="image/*"
-              onChange={handleChange}
-              className="text-sm text-gray-600"
-            />
+
+            {/* Form Fields */}
+            <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[
+                { label: "Full Name", name: "name", placeholder: "John Doe" },
+                { label: "Age", name: "age", placeholder: "22" },
+                { label: "Gender", name: "gender", type: "select" },
+                { label: "Email", name: "email", placeholder: "email@example.com" },
+                { label: "Phone", name: "phone", placeholder: "+91 9876543210" },
+                { label: "Address", name: "address", placeholder: "City, State" },
+                { label: "University", name: "university", placeholder: "ABC University" },
+                { label: "Course", name: "course", placeholder: "B.Tech CSE" },
+              ].map((field) => (
+                <div key={field.name}>
+                  <label className="block text-sm font-medium mb-1 text-blue-700">{field.label}</label>
+                  {field.type === "select" ? (
+                    <select
+                      name={field.name}
+                      value={formData[field.name]}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:outline-none"
+                    >
+                      <option value="">Select Gender</option>
+                      <option>Male</option>
+                      <option>Female</option>
+                      <option>Other</option>
+                    </select>
+                  ) : (
+                    <input
+                      type="text"
+                      name={field.name}
+                      value={formData[field.name]}
+                      onChange={handleChange}
+                      placeholder={field.placeholder}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:outline-none"
+                    />
+                  )}
+                </div>
+              ))}
+
+              {/* Skills Textarea spans both columns */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium mb-1 text-blue-700">Skills (comma separated)</label>
+                <textarea
+                  name="skills"
+                  value={formData.skills}
+                  onChange={handleChange}
+                  placeholder="React, Node.js, Python"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:outline-none"
+                  rows={3}
+                />
+              </div>
+
+              <div className="md:col-span-2 flex justify-end">
+                <button
+                  type="submit"
+                  className="px-6 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition duration-200"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </>
+      ) : (
+        <div className="space-y-6">
+          <h2 className="text-3xl font-bold text-center text-blue-800">Profile Summary</h2>
+
+          <div className="flex justify-center">
+            {image && (
+              <img
+                src={image}
+                alt="Profile"
+                className="w-32 h-32 rounded-full object-cover border border-blue-300"
+              />
+            )}
           </div>
 
-          {/* Right: Form inputs */}
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-green-700">Create Profile</h2>
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              onChange={handleChange}
-              required
-              className="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
-            />
-            <input
-              type="text"
-              name="collegeId"
-              placeholder="College ID"
-              onChange={handleChange}
-              required
-              className="w-full border rounded-md px-4 py-2"
-            />
-            <input
-              type="text"
-              name="year"
-              placeholder="Year (e.g. 3rd)"
-              onChange={handleChange}
-              required
-              className="w-full border rounded-md px-4 py-2"
-            />
-            <input
-              type="text"
-              name="department"
-              placeholder="Department"
-              onChange={handleChange}
-              required
-              className="w-full border rounded-md px-4 py-2"
-            />
-            <input
-              type="text"
-              name="skills"
-              placeholder="Skills/Interests (comma separated)"
-              onChange={handleChange}
-              className="w-full border rounded-md px-4 py-2"
-            />
-            <input
-              type="text"
-              name="projectAreas"
-              placeholder="Project Areas (comma separated)"
-              onChange={handleChange}
-              className="w-full border rounded-md px-4 py-2"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Object.entries(formData).map(([key, value]) => (
+              <div key={key} className="bg-blue-50 p-4 rounded-xl border border-blue-100 shadow-sm">
+                <div className="text-sm text-blue-500 capitalize">{key.replace(/([A-Z])/g, " $1")}</div>
+                <div className="text-base font-medium text-blue-800">{value || "N/A"}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex justify-end">
             <button
-              type="submit"
-              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition"
+              className="px-6 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition duration-200"
+              onClick={handleEdit}
             >
-              Submit
+              Edit Profile
             </button>
           </div>
-        </form>
-      ) : (
-        <div className="bg-white shadow-md rounded-xl p-8 w-full max-w-2xl text-center">
-          <h2 className="text-3xl font-bold text-green-700 mb-6">Profile Summary</h2>
-          {profile.profilePic && (
-            <img
-              src={profile.profilePic}
-              className="w-24 h-24 rounded-full mx-auto object-cover mb-4"
-              alt="Profile"
-            />
-          )}
-          <div className="text-left space-y-2 text-gray-700">
-            <p><strong>Name:</strong> {profile.name}</p>
-            <p><strong>College ID:</strong> {profile.collegeId}</p>
-            <p><strong>Year:</strong> {profile.year}</p>
-            <p><strong>Department:</strong> {profile.department}</p>
-            <p><strong>Skills:</strong> {profile.skills}</p>
-            <p><strong>Project Areas:</strong> {profile.projectAreas}</p>
-          </div>
-          <button
-            className="mt-6 bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded"
-            onClick={() => setProfile(null)}
-          >
-            Edit Profile
-          </button>
         </div>
       )}
     </div>
   );
 };
 
-export default MyProfilePage;
+export default MyProfile;
