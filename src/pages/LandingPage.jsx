@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Users, MessageCircle, Star, LayoutGrid } from 'lucide-react';
 
 const Navbar = () => (
-  <nav className="fixed top-0 left-0 w-full bg-indigo-700 text-white py-4 shadow-md z-50">
+  <nav className="fixed top-0 left-0 w-full bg-indigo-900 text-white py-4 shadow-md z-50">
     <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-4 md:px-8">
       <motion.h1
         className="text-2xl md:text-3xl font-extrabold tracking-tight"
@@ -167,7 +167,7 @@ const AboutSection = () => (
 );
 
 const Footer = () => (
-  <footer className="bg-indigo-700 text-white py-6 text-center">
+  <footer className="bg-indigo-900 text-white py-6 text-center">
     <div className="max-w-7xl mx-auto flex flex-col items-center gap-4 px-4">
       <p className="text-sm sm:text-base">&copy; 2025 PeerConnect. All rights reserved.</p>
       <div className="flex space-x-5">

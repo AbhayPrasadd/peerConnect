@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, Bell } from "lucide-react";
+import { Menu, Bell, User } from "lucide-react";
 
 // Custom Popover Component
 const Popover = ({ children, content }) => {
@@ -49,18 +49,14 @@ const DropdownMenu = ({ children, menuItems }) => {
   );
 };
 
-// Custom Avatar Component
-const Avatar = ({ src, fallback }) => (
-  <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
-    {src ? (
-      <img src={src} alt="User" className="w-full h-full object-cover" />
-    ) : (
-      <span>{fallback}</span>
-    )}
+// Avatar with Icon and Blue Theme
+const Avatar = () => (
+  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md">
+    <User className="w-6 h-6 text-indigo-700" />
   </div>
 );
 
-// Navbar Component
+// Main Navbar Component
 const Navbar = ({ setIsSidebarOpen }) => {
   const [notifications] = useState([
     "John Doe sent you a connection request",
@@ -70,14 +66,14 @@ const Navbar = ({ setIsSidebarOpen }) => {
   ]);
 
   return (
-    <nav className="fixed top-0 left-0 w-full h-16 bg-green-900 shadow-md flex items-center justify-between px-6 z-50">
+    <nav className="fixed top-0 left-0 w-full h-16 bg-indigo-900 shadow-md flex items-center justify-between px-6 z-50">
       {/* Sidebar Toggle */}
       <button className="text-white p-2 z-50" onClick={() => setIsSidebarOpen((prev) => !prev)}>
         <Menu className="h-6 w-6" />
       </button>
 
       {/* Dashboard Title */}
-      <div className="text-xl font-semibold text-white">Student Connect</div>
+      <div className="text-xl font-semibold text-white"></div>
 
       {/* Notifications and Profile */}
       <div className="flex items-center gap-14">
@@ -100,12 +96,12 @@ const Navbar = ({ setIsSidebarOpen }) => {
             </div>
           }
         >
-          <Bell className="h-8 w-8" />
+          <Bell className="h-8 w-8 text-white" />
         </Popover>
 
         {/* Profile Dropdown */}
         <DropdownMenu menuItems={["Profile", "Settings", "Logout"]}>
-          <Avatar src="/dashboard/profile.png" fallback="U" />
+          <Avatar />
         </DropdownMenu>
       </div>
     </nav>
