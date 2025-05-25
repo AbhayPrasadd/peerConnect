@@ -5,7 +5,7 @@ const ConnectionPage = () => {
   const { connectedStudents } = useConnections();
 
   if (connectedStudents.length === 0) {
-    return <p className="text-center mt-8">No connections yet.</p>;
+    return <p className="p-4 text-center">You have no connections yet.</p>;
   }
 
   return (
@@ -13,7 +13,7 @@ const ConnectionPage = () => {
       <h2 className="text-3xl font-bold mb-6 text-center">Your Connections</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {connectedStudents.map((student) => (
-          <div key={student.id} className="bg-white rounded-xl p-4 shadow-md hover:shadow-xl transition">
+          <div key={student.id} className="bg-white rounded-xl p-4 shadow-md">
             <img
               src={`https://api.dicebear.com/7.x/initials/svg?seed=${student.name}`}
               alt="Profile"

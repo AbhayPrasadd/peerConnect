@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Users, User, Search, Tag } from "lucide-react";
+import { useConnections } from "../context/ConnectionContext";
+import { Users, Search, Tag } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Dashboard = () => {
+  const { connectedStudents } = useConnections();
   const [activeTab, setActiveTab] = useState("profile");
 
   const stats = {
-    connections: 12,
+    connections: connectedStudents.length,
     skillsMatched: 18,
     projectTags: 5,
   };
@@ -27,41 +29,42 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-6 sm:p-10 bg-gray-50 min-h-screen">
+    <div className="p-6 sm:p-10 bg-gray-50 min-h-screen font-sans">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-extrabold text-green-800 mb-1">Dashboard</h1>
+      <header className="mb-8">
+        <h1 className="text-4xl font-bold text-green-800 mb-2">Dashboard</h1>
         <p className="text-gray-600 text-lg">Welcome to your PeerConnect dashboard!</p>
-      </div>
+      </header>
 
       {/* Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <StatCard icon={<Users className="w-8 h-8 text-green-600" />} label="Connections" value={stats.connections} />
-        <StatCard icon={<Search className="w-8 h-8 text-blue-600" />} label="Skills Matched" value={stats.skillsMatched} />
-        <StatCard icon={<Tag className="w-8 h-8 text-purple-600" />} label="Project Tags" value={stats.projectTags} />
-      </div>
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <StatCard icon={<Users className="w-8 h-8" />} label="Connections" value={stats.connections} color="green" />
+        <StatCard icon={<Search className="w-8 h-8" />} label="Skills Matched" value={stats.skillsMatched} color="blue" />
+        <StatCard icon={<Tag className="w-8 h-8" />} label="Project Tags" value={stats.projectTags} color="purple" />
+      </section>
 
       {/* Tabs */}
-      <div className="mb-6 border-b border-gray-200">
-        <div className="flex space-x-6 text-lg font-medium">
-          {["profile", "browse", "connections"].map((tab) => (
+      <nav className="mb-6 border-b border-gray-200 overflow-x-auto">
+        <div className="flex space-x-6 text-base sm:text-lg font-medium">
+          {Object.keys(tabContent).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`pb-3 transition ${
+              className={`pb-3 px-2 transition whitespace-nowrap ${
                 activeTab === tab
                   ? "text-green-700 border-b-2 border-green-600"
                   : "text-gray-500 hover:text-green-600"
               }`}
+              aria-current={activeTab === tab ? "page" : undefined}
             >
               {tabContent[tab].title}
             </button>
           ))}
         </div>
-      </div>
+      </nav>
 
       {/* Tab Content */}
-      <div className="bg-white p-8 rounded-2xl shadow-md">
+      <main className="bg-white p-6 sm:p-8 rounded-2xl shadow-md">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -70,21 +73,21 @@ const Dashboard = () => {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4 }}
           >
-            <h2 className="text-2xl font-bold text-green-800 mb-3">{tabContent[activeTab].title}</h2>
-            <p className="text-gray-700 text-lg">{tabContent[activeTab].description}</p>
+            <h2 className="text-2xl font-bold text-green-800 mb-2">{tabContent[activeTab].title}</h2>
+            <p className="text-gray-700 text-base sm:text-lg">{tabContent[activeTab].description}</p>
           </motion.div>
         </AnimatePresence>
-      </div>
+      </main>
     </div>
   );
 };
 
-const StatCard = ({ icon, label, value }) => (
+const StatCard = ({ icon, label, value, color }) => (
   <motion.div
-    className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition duration-300 flex items-center space-x-4"
+    className={`bg-white p-5 sm:p-6 rounded-2xl shadow hover:shadow-lg transition duration-300 flex items-center space-x-4 border-t-4 border-${color}-500`}
     whileHover={{ scale: 1.03 }}
   >
-    {icon}
+    <div className={`p-3 bg-${color}-100 rounded-full text-${color}-600`}>{icon}</div>
     <div>
       <p className="text-sm text-gray-500">{label}</p>
       <p className="text-2xl font-semibold text-gray-800">{value}</p>

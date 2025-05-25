@@ -1,19 +1,16 @@
-import { createContext, useContext, useEffect, useState } from "react";
+// ConnectionContext.jsx
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const ConnectionContext = createContext();
-
-export const useConnections = () => useContext(ConnectionContext);
 
 export const ConnectionProvider = ({ children }) => {
   const [connectedStudents, setConnectedStudents] = useState([]);
 
-  // Load from localStorage on first render
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("connectedStudents")) || [];
-    setConnectedStudents(saved);
+    const saved = localStorage.getItem("connectedStudents");
+    if (saved) setConnectedStudents(JSON.parse(saved));
   }, []);
 
-  // Save to localStorage when state changes
   useEffect(() => {
     localStorage.setItem("connectedStudents", JSON.stringify(connectedStudents));
   }, [connectedStudents]);
@@ -21,6 +18,7 @@ export const ConnectionProvider = ({ children }) => {
   const addConnection = (student) => {
     if (!connectedStudents.some((s) => s.id === student.id)) {
       setConnectedStudents((prev) => [...prev, student]);
+      alert("Connection request sent."); // Simple alert notification
     }
   };
 
@@ -30,3 +28,5 @@ export const ConnectionProvider = ({ children }) => {
     </ConnectionContext.Provider>
   );
 };
+
+export const useConnections = () => useContext(ConnectionContext);

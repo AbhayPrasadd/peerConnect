@@ -74,11 +74,19 @@ const HeroSection = () => {
           </motion.button>
         </motion.div>
 
-        <div className="flex-1 w-full h-[400px] md:h-[500px] relative">
-          <Suspense fallback={<div className="text-center text-gray-500">Loading 3D...</div>}>
-            <Spline scene="https://prod.spline.design/0pfqtWX8C0UhyKtX/scene.splinecode" />
-          </Suspense>
-        </div>
+       <div className="flex-1 w-full h-[600px] md:h-[600px] relative">
+  <div className="w-full h-full">
+    <iframe
+      src="https://my.spline.design/genkubgreetingrobot-AwSLemJOaKJ9ZCAeWJ9HLXk7/"
+      frameBorder="0"
+      width="100%"
+      height="100%"
+      allow="fullscreen"
+      title="Greeting Robot"
+    ></iframe>
+  </div>
+</div>
+
       </div>
     </section>
   );
